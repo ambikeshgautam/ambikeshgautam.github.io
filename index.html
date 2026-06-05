@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ambikesh Gautam — Senior Software Engineer</title>
+<meta name="description" content="Senior Software Engineer specializing in scalable backend systems, AWS serverless architecture, and marketplace integrations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0f14;
+    --bg-2:#11161f;
+    --surface:#151b26;
+    --line:#222b3a;
+    --ink:#e8edf4;
+    --muted:#8c98ab;
+    --faint:#5a6677;
+    --amber:#f4a939;
+    --amber-soft:#f9c46b;
+    --teal:#3fd0c9;
+    --mono:'JetBrains Mono',monospace;
+    --display:'Fraunces',serif;
+    --sans:'Space Grotesk',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* grid texture background */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;
+    opacity:.18;
+    z-index:0;
+    pointer-events:none;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 80%);
+  }
+  /* amber glow */
+  body::after{
+    content:"";
+    position:fixed;
+    top:-200px;left:50%;
+    width:900px;height:600px;
+    transform:translateX(-50%);
+    background:radial-gradient(circle,rgba(244,169,57,.10),transparent 60%);
+    z-index:0;pointer-events:none;
+  }
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 28px}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(12px);
+    background:rgba(12,15,20,.7);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{max-width:1080px;margin:0 auto;padding:16px 28px;display:flex;justify-content:space-between;align-items:center}
+  .logo{font-family:var(--mono);font-weight:600;font-size:15px;letter-spacing:-.5px;display:flex;align-items:center;gap:8px}
+  .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px var(--amber);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.82)}}
+  .nav-links{display:flex;gap:28px;font-size:14px;font-family:var(--mono)}
+  .nav-links a{color:var(--muted);text-decoration:none;transition:color .2s}
+  .nav-links a:hover{color:var(--amber)}
+  @media(max-width:680px){.nav-links{display:none}}
+
+  /* HERO */
+  header{padding:92px 0 80px;position:relative}
+  .tag{
+    font-family:var(--mono);font-size:13px;color:var(--amber);
+    letter-spacing:1px;text-transform:uppercase;margin-bottom:22px;
+    display:inline-flex;align-items:center;gap:10px;
+    opacity:0;animation:rise .7s .1s forwards;
+  }
+  .tag::before{content:"";width:28px;height:1px;background:var(--amber)}
+  h1{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(2.6rem,7vw,5rem);
+    line-height:1.02;
+    letter-spacing:-1.5px;
+    margin-bottom:24px;
+    opacity:0;animation:rise .7s .22s forwards;
+  }
+  h1 em{font-style:italic;color:var(--amber-soft)}
+  .lede{
+    font-size:clamp(1.05rem,2vw,1.32rem);
+    color:var(--muted);
+    max-width:640px;
+    margin-bottom:38px;
+    opacity:0;animation:rise .7s .34s forwards;
+  }
+  .lede b{color:var(--ink);font-weight:600}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:rise .7s .46s forwards}
+  .btn{
+    font-family:var(--mono);font-size:14px;font-weight:500;
+    padding:13px 22px;border-radius:8px;text-decoration:none;
+    transition:all .22s;display:inline-flex;align-items:center;gap:9px;
+  }
+  .btn-primary{background:var(--amber);color:#1a1206}
+  .btn-primary:hover{background:var(--amber-soft);transform:translateY(-2px);box-shadow:0 8px 24px rgba(244,169,57,.28)}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-2px)}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  .tag,h1,.lede,.cta-row{transform:translateY(18px)}
+
+  /* uptime strip */
+  .strip{
+    margin-top:64px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:linear-gradient(180deg,var(--surface),var(--bg-2));
+    padding:22px 28px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+    opacity:0;animation:rise .7s .6s forwards;transform:translateY(18px);
+  }
+  .strip .stat .num{font-family:var(--display);font-size:2rem;font-weight:600;color:var(--amber-soft);line-height:1}
+  .strip .stat .lbl{font-family:var(--mono);font-size:11.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.5px;margin-top:6px}
+  @media(max-width:680px){.strip{grid-template-columns:repeat(2,1fr);gap:24px}}
+
+  /* SECTION */
+  section{padding:72px 0;position:relative}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:44px}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--amber);opacity:.8}
+  .sec-title{font-family:var(--display);font-size:clamp(1.7rem,3.5vw,2.4rem);font-weight:600;letter-spacing:-.5px}
+  .sec-line{flex:1;height:1px;background:var(--line)}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start}
+  @media(max-width:780px){.about-grid{grid-template-columns:1fr;gap:32px}}
+  .about p{color:var(--muted);font-size:1.05rem;margin-bottom:18px}
+  .about p b{color:var(--ink)}
+  .terminal{
+    background:#0a0d12;border:1px solid var(--line);border-radius:12px;
+    font-family:var(--mono);font-size:13px;overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,.4);
+  }
+  .term-bar{background:var(--bg-2);padding:11px 14px;display:flex;gap:7px;border-bottom:1px solid var(--line)}
+  .term-bar i{width:11px;height:11px;border-radius:50%;display:block}
+  .term-bar i:nth-child(1){background:#ff5f56}.term-bar i:nth-child(2){background:#ffbd2e}.term-bar i:nth-child(3){background:#27c93f}
+  .term-body{padding:18px 16px;line-height:1.9}
+  .term-body .c{color:var(--faint)}
+  .term-body .k{color:var(--teal)}
+  .term-body .s{color:var(--amber-soft)}
+  .term-body .v{color:var(--ink)}
+  .prompt{color:var(--amber)}
+
+  /* EXPERIENCE */
+  .xp{position:relative;padding-left:30px;border-left:1px solid var(--line)}
+  .xp-item{position:relative;padding-bottom:46px}
+  .xp-item:last-child{padding-bottom:0}
+  .xp-item::before{
+    content:"";position:absolute;left:-36px;top:6px;width:12px;height:12px;
+    border-radius:50%;background:var(--bg);border:2px solid var(--amber);
+  }
+  .xp-item.cur::before{background:var(--amber);box-shadow:0 0 14px var(--amber)}
+  .xp-date{font-family:var(--mono);font-size:12.5px;color:var(--amber);letter-spacing:.5px}
+  .xp-role{font-family:var(--display);font-size:1.35rem;font-weight:600;margin:4px 0 2px}
+  .xp-co{font-size:.95rem;color:var(--muted);margin-bottom:16px}
+  .xp-co span{color:var(--faint)}
+  .xp ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .xp li{color:var(--muted);font-size:.97rem;padding-left:22px;position:relative}
+  .xp li::before{content:"▸";position:absolute;left:0;color:var(--amber);font-size:.8rem;top:2px}
+  .xp li b{color:var(--ink);font-weight:600}
+
+  /* PROJECTS */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:780px){.proj-grid{grid-template-columns:1fr}}
+  .card{
+    background:linear-gradient(180deg,var(--surface),var(--bg-2));
+    border:1px solid var(--line);border-radius:14px;padding:28px;
+    transition:transform .25s,border-color .25s;position:relative;overflow:hidden;
+  }
+  .card::after{
+    content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--amber),transparent);
+    transform:translateX(-100%);transition:transform .5s;
+  }
+  .card:hover{transform:translateY(-5px);border-color:#33415a}
+  .card:hover::after{transform:translateX(0)}
+  .card .ico{font-family:var(--mono);font-size:12px;color:var(--amber);margin-bottom:14px;letter-spacing:1px}
+  .card h3{font-family:var(--display);font-size:1.3rem;font-weight:600;margin-bottom:10px;line-height:1.2}
+  .card p{color:var(--muted);font-size:.95rem;margin-bottom:16px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-family:var(--mono);font-size:11px;color:var(--faint);border:1px solid var(--line);padding:4px 9px;border-radius:6px}
+
+  /* STACK */
+  .stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:780px){.stack-grid{grid-template-columns:1fr}}
+  .stack-cat{border:1px solid var(--line);border-radius:12px;padding:22px;background:var(--bg-2)}
+  .stack-cat h4{font-family:var(--mono);font-size:12px;color:var(--amber);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+  .stack-cat .items{display:flex;flex-wrap:wrap;gap:8px}
+  .stack-cat .t{font-size:13.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:7px;font-family:var(--mono);transition:all .2s}
+  .stack-cat .t:hover{border-color:var(--amber);color:var(--amber)}
+
+  /* CERTS */
+  .cert-list{display:flex;flex-direction:column;gap:12px}
+  .cert{display:flex;align-items:center;gap:16px;border:1px solid var(--line);border-radius:10px;padding:16px 20px;background:var(--bg-2);transition:border-color .2s}
+  .cert:hover{border-color:#33415a}
+  .cert .badge{font-family:var(--mono);font-size:11px;color:#1a1206;background:var(--amber);padding:4px 8px;border-radius:5px;font-weight:600;white-space:nowrap}
+  .cert .name{font-size:.97rem;color:var(--ink)}
+  .cert .name span{color:var(--faint);font-family:var(--mono);font-size:12px}
+
+  /* CONTACT */
+  .contact{text-align:center;padding:90px 0 40px}
+  .contact h2{font-family:var(--display);font-size:clamp(2rem,5vw,3.2rem);font-weight:600;letter-spacing:-1px;margin-bottom:18px}
+  .contact h2 em{font-style:italic;color:var(--amber-soft)}
+  .contact p{color:var(--muted);max-width:480px;margin:0 auto 32px;font-size:1.05rem}
+  .contact-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+
+  footer{border-top:1px solid var(--line);padding:28px 0;text-align:center}
+  footer p{font-family:var(--mono);font-size:12.5px;color:var(--faint)}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+  .reveal.in{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo"><span class="dot"></span>ambikesh.dev</div>
+    <div class="nav-links">
+      <a href="#about">about</a>
+      <a href="#experience">experience</a>
+      <a href="#work">work</a>
+      <a href="#stack">stack</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header>
+    <span class="tag">Senior Software Engineer · Backend & Cloud</span>
+    <h1>I architect backend systems that <em>scale</em> and don't break under load.</h1>
+    <p class="lede"><b>6+ years</b> building high-performance, fault-tolerant backend systems on <b>Node.js</b> and <b>AWS serverless</b> — and the marketplace integrations that move data across them at scale.</p>
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-primary">→ Get in touch</a>
+      <a href="https://github.com/ambikeshgautam" target="_blank" class="btn btn-ghost">View GitHub</a>
+    </div>
+
+    <div class="strip">
+      <div class="stat"><div class="num">6+</div><div class="lbl">Years building backends</div></div>
+      <div class="stat"><div class="num">10K+</div><div class="lbl">Records / batch processed</div></div>
+      <div class="stat"><div class="num">30–40%</div><div class="lbl">Latency reduced</div></div>
+      <div class="stat"><div class="num">7+</div><div class="lbl">Marketplaces integrated</div></div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="sec-head reveal"><span class="sec-num">01</span><span class="sec-title">About</span><span class="sec-line"></span></div>
+    <div class="about-grid">
+      <div class="about reveal">
+        <p>I'm a backend engineer who likes the unglamorous parts: <b>idempotent pipelines, dead-letter queues, schema design, and APIs that behave under pressure.</b></p>
+        <p>At <b>Threecolts</b> I architect white-label SaaS connectors for the Mirakl ecosystem and build event-driven services on AWS that process high-volume e-commerce data. Before that, I led a 4-person team at <b>Cedcoss</b> shipping WooCommerce marketplace plugins published to WordPress.org.</p>
+        <p>Lately I've been going deep on <b>AI-powered automation</b> — building LLM-based agentic systems and MCP servers with the Claude API for log analysis and error resolution.</p>
+        <p>I like owning a problem end-to-end, from the architecture diagram to the production dashboard.</p>
+      </div>
+      <div class="terminal reveal">
+        <div class="term-bar"><i></i><i></i><i></i></div>
+        <div class="term-body">
+          <div><span class="prompt">➜</span> <span class="k">whoami</span></div>
+          <div class="v">ambikesh_gautam</div>
+          <div><span class="prompt">➜</span> <span class="k">cat</span> profile.json</div>
+          <div>{</div>
+          <div>&nbsp;&nbsp;<span class="s">"role"</span>: <span class="v">"Senior Software Engineer"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="s">"focus"</span>: <span class="v">"Backend · Cloud"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="s">"stack"</span>: <span class="v">["Node.js","AWS","PHP"]</span>,</div>
+          <div>&nbsp;&nbsp;<span class="s">"location"</span>: <span class="v">"Lucknow, IN"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="s">"status"</span>: <span class="v">"building things"</span></div>
+          <div>}</div>
+          <div><span class="prompt">➜</span> <span style="opacity:.6">_</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-head reveal"><span class="sec-num">02</span><span class="sec-title">Experience</span><span class="sec-line"></span></div>
+    <div class="xp">
+      <div class="xp-item cur reveal">
+        <div class="xp-date">SEP 2024 — PRESENT</div>
+        <div class="xp-role">Senior Software Engineer</div>
+        <div class="xp-co">Threecolts India Pvt. Ltd. <span>· Remote</span></div>
+        <ul>
+          <li>Architected multiple <b>white-label SaaS connectors</b> for the Mirakl marketplace ecosystem, owning AWS architecture and database schema design.</li>
+          <li>Designed <b>Node.js + PHP microservices</b> on AWS (Lambda, API Gateway, SQS, DynamoDB) for high-volume e-commerce data processing.</li>
+          <li>Built event-driven pipelines ingesting <b>10K+ records/batch</b>, reducing API latency by <b>30–40%</b> via queue-based decoupling.</li>
+          <li>Engineered <b>LLM-based agentic systems</b> with the Claude API for automated log analysis and error resolution.</li>
+        </ul>
+      </div>
+      <div class="xp-item reveal">
+        <div class="xp-date">MAR 2020 — SEP 2024</div>
+        <div class="xp-role">Backend Developer</div>
+        <div class="xp-co">Cedcoss Technologies Pvt. Ltd. <span>· Lucknow, India</span></div>
+        <ul>
+          <li>Led a <b>4-person team</b> developing WooCommerce marketplace integration plugins published to the WordPress.org repository.</li>
+          <li>Built Shopify apps using the Shopify Admin API, including a <b>Shopify MCF connector</b> for order fulfillment (PHP + Node + MongoDB, microservices).</li>
+          <li>Designed and optimized complex MySQL and MongoDB queries, improving system performance and stability by <b>25%</b>.</li>
+          <li>Implemented robust error handling, logging, and debugging for high-concurrency production systems.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="sec-head reveal"><span class="sec-num">03</span><span class="sec-title">Selected Work</span><span class="sec-line"></span></div>
+    <div class="proj-grid">
+      <div class="card reveal">
+        <div class="ico">// SAAS · AWS</div>
+        <h3>Mirakl White-Label Connector Suite</h3>
+        <p>Architected SaaS connectors syncing catalog, inventory, and orders between Mirakl Connect and four major commerce platforms — SFCC, Otto, WooCommerce & BigCommerce.</p>
+        <div class="chips"><span class="chip">Node.js</span><span class="chip">AWS Lambda</span><span class="chip">DynamoDB</span><span class="chip">Mirakl</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="ico">// INTEGRATION</div>
+        <h3>ChannelReply — Helpdesk × Marketplace</h3>
+        <p>Connector unifying buyer messages and order data from Amazon, eBay, Walmart, Etsy, Shopify & WooCommerce into helpdesks like Zendesk, Freshdesk & Gorgias.</p>
+        <div class="chips"><span class="chip">Node.js</span><span class="chip">SQS</span><span class="chip">Webhooks</span><span class="chip">REST</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="ico">// SERVERLESS</div>
+        <h3>Multi-Channel Integration Engine</h3>
+        <p>Node.js + AWS serverless engine syncing inventory, orders, and pricing in real time across platforms, with idempotent, fault-tolerant pipelines.</p>
+        <div class="chips"><span class="chip">Lambda</span><span class="chip">SQS</span><span class="chip">MongoDB</span><span class="chip">Idempotency</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="ico">// AI · AGENTIC</div>
+        <h3>LLM-Based Backend Monitoring</h3>
+        <p>Agentic system using the Claude API and custom MCP servers to analyze logs, surface root causes, and trigger automated recovery workflows.</p>
+        <div class="chips"><span class="chip">Claude API</span><span class="chip">MCP</span><span class="chip">Node.js</span><span class="chip">Automation</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="sec-head reveal"><span class="sec-num">04</span><span class="sec-title">Tech Stack</span><span class="sec-line"></span></div>
+    <div class="stack-grid">
+      <div class="stack-cat reveal">
+        <h4>Languages</h4>
+        <div class="items"><span class="t">JavaScript</span><span class="t">TypeScript</span><span class="t">PHP</span><span class="t">Python</span></div>
+      </div>
+      <div class="stack-cat reveal">
+        <h4>Backend & APIs</h4>
+        <div class="items"><span class="t">Node.js</span><span class="t">Express</span><span class="t">Laravel</span><span class="t">REST</span><span class="t">GraphQL</span><span class="t">Microservices</span></div>
+      </div>
+      <div class="stack-cat reveal">
+        <h4>Cloud & DevOps</h4>
+        <div class="items"><span class="t">AWS Lambda</span><span class="t">API Gateway</span><span class="t">SQS</span><span class="t">ECS / EC2</span><span class="t">Docker</span><span class="t">CI/CD</span><span class="t">Terraform</span></div>
+      </div>
+      <div class="stack-cat reveal">
+        <h4>Databases</h4>
+        <div class="items"><span class="t">MySQL</span><span class="t">MongoDB</span><span class="t">DynamoDB</span><span class="t">Redis</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTS -->
+  <section id="certs">
+    <div class="sec-head reveal"><span class="sec-num">05</span><span class="sec-title">Certifications</span><span class="sec-line"></span></div>
+    <div class="cert-list">
+      <div class="cert reveal"><span class="badge">ANTHROPIC</span><span class="name">AI Fluency: Framework & Foundations</span></div>
+      <div class="cert reveal"><span class="badge">ANTHROPIC</span><span class="name">Claude Code 101 & In Action</span></div>
+      <div class="cert reveal"><span class="badge">ANTHROPIC</span><span class="name">Introduction to Model Context Protocol, Agent Skills & Subagents</span></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="reveal">
+      <h2>Let's build something <em>solid</em>.</h2>
+      <p>Open to backend, cloud, and integration challenges. The inbox is always open.</p>
+      <div class="contact-links">
+        <a href="mailto:dev.ambikesh@gmail.com" class="btn btn-primary">→ dev.ambikesh@gmail.com</a>
+        <a href="https://www.linkedin.com/in/ambikeshgautam/" target="_blank" class="btn btn-ghost">LinkedIn</a>
+        <a href="https://github.com/ambikeshgautam" target="_blank" class="btn btn-ghost">GitHub</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>Designed & built by Ambikesh Gautam · Lucknow, India · 2026</p>
+</footer>
+
+<script>
+  // scroll reveal
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{
+    el.style.transitionDelay = (i % 4 * 0.07) + 's';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
